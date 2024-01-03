@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 [DefaultExecutionOrder(100)]
 public class randomcard : MonoBehaviour
@@ -15,6 +17,10 @@ public class randomcard : MonoBehaviour
 
     private Image imgpicture; //Canvas顯示sprite可使用image
 
+    private GameObject fill; //框
+
+    private string currentDate; // 用於保存上一次執行的日期的 PlayerPrefs 鍵值
+
 
     private void Awake()
     {
@@ -24,9 +30,21 @@ public class randomcard : MonoBehaviour
 
         imgpicture = GameObject.Find("圖片").GetComponent<Image>();
 
+        fill = GameObject.Find("框").GetComponent<GameObject>();
+
         GetRandompicture();
 
+        string day = PlayerPrefs.GetString("日期", " ");
+        currentDate = DateTime.Now.ToString("MMdd");
+        if (day != currentDate)
+        {
+            PlayerPrefs.SetString("日期", currentDate);
+            PlayerPrefs.Save();
+            Debug.Log("已拿到不再執行");
+        }
     }
+
+
 
     private void Update()
     {
@@ -83,6 +101,5 @@ public class randomcard : MonoBehaviour
 
         PlayerPrefs.SetString("圖片" + indexRandom, "已拿到");//設定圖片已拿
     }
-
 
 }
