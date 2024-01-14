@@ -38,8 +38,11 @@ public class randomcard : MonoBehaviour
         {
             PlayerPrefs.SetString("日期", currentDate);
             GetRandompicture();
+        }
+        else if (day == currentDate)
+        { 
             fill.SetActive(false);
-            PlayerPrefs.Save();
+            //PlayerPrefs.Save();
             Debug.Log("已拿到圖不再執行");
         }
     }
